@@ -3,8 +3,6 @@ import Link from "next/link";
 import { store } from "@/lib/store";
 import { Building2, MapPin, Phone, Film, Sparkles, Volume2, Monitor } from "lucide-react";
 
-export const revalidate = 0;
-
 export default async function CinemasPage() {
   await store.init();
   const cinemas = Array.from(store.cinemas.values()).map((c) => {

@@ -15,8 +15,6 @@ import {
   Flame,
 } from "lucide-react";
 
-export const revalidate = 0; // Dynamic server rendering for live showtimes
-
 export default async function HomePage() {
   await store.init();
   const allMovies = Array.from(store.movies.values());
