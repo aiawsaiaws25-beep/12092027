@@ -1,13 +1,24 @@
 import { NextResponse } from "next/server";
 import { store } from "@/lib/store";
 
+export const dynamic = "force-static";
+
 export async function GET(request: Request) {
   await store.init();
-  const { searchParams } = new URL(request.url);
-  const search = searchParams.get("search")?.toLowerCase();
-  const genre = searchParams.get("genre")?.toLowerCase();
-  const language = searchParams.get("language")?.toLowerCase();
-  const status = searchParams.get("status");
+  let search: string | undefined;
+  let genre: string | undefined;
+  let language: string | undefined;
+  let status: string | null = null;
+
+  try {
+    if (request && request.url) {
+      const { searchParams } = new URL(request.url);
+      search = searchParams.get("search")?.toLowerCase();
+      genre = searchParams.get("genre")?.toLowerCase();
+      language = searchParams.get("language")?.toLowerCase();
+      status = searchParams.get("status");
+    }
+  } catch (e) {}
 
   let movieList = Array.from(store.movies.values());
 

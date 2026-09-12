@@ -1,6 +1,13 @@
 /** @type {import('next').NextConfig} */
+const isGithubPages = process.env.GITHUB_ACTIONS || process.env.NEXT_PUBLIC_DEPLOY_TARGET === 'gh-pages' || process.env.NODE_ENV === 'production';
+const repoName = '12092027';
+
 const nextConfig = {
+  output: isGithubPages ? 'export' : undefined,
+  basePath: process.env.GITHUB_ACTIONS ? `/${repoName}` : '',
+  trailingSlash: true,
   images: {
+    unoptimized: true,
     remotePatterns: [
       {
         protocol: 'https',
@@ -16,9 +23,6 @@ const nextConfig = {
       }
     ],
   },
-  experimental: {
-    serverComponentsExternalPackages: ['pg', '@neondatabase/serverless', 'bcryptjs'],
-  }
 };
 
 export default nextConfig;

@@ -2,6 +2,8 @@ import { NextResponse } from "next/server";
 import { getCurrentUser } from "@/lib/auth";
 import { store } from "@/lib/store";
 
+export const dynamic = "force-static";
+
 export async function GET() {
   await store.init();
   const session = await getCurrentUser();

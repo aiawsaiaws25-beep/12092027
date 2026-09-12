@@ -1,11 +1,19 @@
 import { NextResponse } from "next/server";
 import { store } from "@/lib/store";
 
+export const dynamic = "force-static";
+
 export async function GET(request: Request) {
   await store.init();
-  const { searchParams } = new URL(request.url);
-  const search = searchParams.get("search")?.toLowerCase();
-  const status = searchParams.get("status");
+  let search: string | undefined;
+  let status: string | null = null;
+  try {
+    if (request && request.url) {
+      const { searchParams } = new URL(request.url);
+      search = searchParams.get("search")?.toLowerCase();
+      status = searchParams.get("status");
+    }
+  } catch (e) {}
 
   let allBookings = Array.from(store.bookings.values());
 
